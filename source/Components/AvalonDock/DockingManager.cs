@@ -8,6 +8,7 @@
  ************************************************************************/
 
 using AvalonDock.Controls;
+using AvalonDock.Converters;
 using AvalonDock.Layout;
 using AvalonDock.Themes;
 using System;
@@ -193,6 +194,8 @@ namespace AvalonDock
 				TopSidePanel = CreateUIElementForModel(Layout.TopSide) as LayoutAnchorSideControl;
 				RightSidePanel = CreateUIElementForModel(Layout.RightSide) as LayoutAnchorSideControl;
 				BottomSidePanel = CreateUIElementForModel(Layout.BottomSide) as LayoutAnchorSideControl;
+
+				BindSidePanelMargins();
 
 				foreach (var fw in Layout.FloatingWindows.ToArray())
 					if (fw.IsValid)
@@ -2006,6 +2009,8 @@ namespace AvalonDock
 				RightSidePanel = CreateUIElementForModel(Layout.RightSide) as LayoutAnchorSideControl;
 				BottomSidePanel = CreateUIElementForModel(Layout.BottomSide) as LayoutAnchorSideControl;
 
+				BindSidePanelMargins();
+
 				// In order to prevent resource leaks, unsubscribe from SizeChanged event for case when we have no stored Layout settings.
 				SizeChanged -= OnSizeChanged;
 				SizeChanged += OnSizeChanged;
@@ -2826,6 +2831,24 @@ namespace AvalonDock
 			Layout.CollectGarbage();
 			UpdateLayout();
 			return fwc;
+		}
+
+		private void BindSidePanelMargins()
+		{
+			MultiBinding CreateMarginBinding(LayoutAnchorSideControl before, LayoutAnchorSideControl after)
+			{
+				var binding = new MultiBinding { ConverterParameter = before == LeftSidePanel ? "lr" : "tb", Converter = new MarginConverter() };
+
+				binding.Bindings.Add(new Binding(before == LeftSidePanel ? ActualWidthProperty.Name : ActualHeightProperty.Name) { Source = before });
+				binding.Bindings.Add(new Binding(before == LeftSidePanel ? ActualWidthProperty.Name : ActualHeightProperty.Name) { Source = after });
+
+				return binding;
+			}
+
+			LeftSidePanel.SetBinding(MarginProperty, CreateMarginBinding(TopSidePanel, BottomSidePanel));
+			RightSidePanel.SetBinding(MarginProperty, CreateMarginBinding(TopSidePanel, BottomSidePanel));
+			TopSidePanel.SetBinding(MarginProperty, CreateMarginBinding(LeftSidePanel, RightSidePanel));
+			BottomSidePanel.SetBinding(MarginProperty, CreateMarginBinding(LeftSidePanel, RightSidePanel));
 		}
 
 		#endregion Private Methods
