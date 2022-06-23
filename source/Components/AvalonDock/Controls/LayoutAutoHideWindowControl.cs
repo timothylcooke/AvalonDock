@@ -358,17 +358,17 @@ namespace AvalonDock.Controls
 
 			if (_side == AnchorSide.Right || _side == AnchorSide.Left)
 			{
-				windowSize = new Size(managerSize.Width - 25.0 + splitter.ActualWidth, managerSize.Height);
+				windowSize = new Size(managerSize.Width - _model.AutoHideMinWidth - 50.0 + splitter.ActualWidth, managerSize.Height);
 				_resizerGhost.Width = splitter.ActualWidth;
 				_resizerGhost.Height = windowSize.Height;
-				ptTopLeftScreen.Offset(25, 0.0);
+				ptTopLeftScreen.Offset(25 + _model.AutoHideMinWidth, 0.0);
 			}
 			else
 			{
-				windowSize = new Size(managerSize.Width, managerSize.Height - _model.AutoHideMinHeight - 25.0 + splitter.ActualHeight);
+				windowSize = new Size(managerSize.Width, managerSize.Height - _model.AutoHideMinHeight - 50.0 + splitter.ActualHeight);
 				_resizerGhost.Height = splitter.ActualHeight;
 				_resizerGhost.Width = windowSize.Width;
-				ptTopLeftScreen.Offset(0.0, 25.0);
+				ptTopLeftScreen.Offset(0.0, 25.0 + _model.AutoHideMinHeight);
 			}
 			_initialStartPoint = splitter.PointToScreenDPIWithoutFlowDirection(new Point()) - ptTopLeftScreen;
 
