@@ -16,7 +16,7 @@
 
     <SolidColorBrush x:Key="AvalonDock_ThemeMetro_BaseColor3" Color="{StaticResource MahApps.Colors.Accent}" />
 
-    <SolidColorBrush x:Key="AvalonDock_ThemeMetro_BaseColor4" Color="{StaticResource MahApps.Colors.Accent}" Opacity="0.2" />
+    <SolidColorBrush x:Key="AvalonDock_ThemeMetro_BaseColor4" Color="{StaticResource MahApps.Colors.Accent}" Opacity="0.4" />
 
 	<SolidColorBrush x:Key="AvalonDock_ThemeMetro_BaseColor5" Color="#333333" />
 
