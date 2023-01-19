@@ -1375,8 +1375,8 @@ namespace AvalonDock
 		internal void InternalAddLogicalChild(object element)
 		{
 #if DEBUG
-			if (_logicalChildren.Select(ch => ch.GetValueOrDefault<object>()).Contains(element))
-				throw new InvalidOperationException();
+			//if (_logicalChildren.Select(ch => ch.GetValueOrDefault<object>()).Contains(element))
+			//	throw new InvalidOperationException();
 #endif
 			if (_logicalChildren.Select(ch => ch.GetValueOrDefault<object>()).Contains(element))
 				return;
